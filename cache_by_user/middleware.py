@@ -1,4 +1,11 @@
+# encoding: utf-8
+import hashlib
+import random
+
+from django.contrib import messages
 from django.conf import settings
+from django.utils.cache import patch_vary_headers
+
 
 class AddUserIDHashMiddleware(object):
     """
@@ -19,7 +26,7 @@ class AddUserIDHashMiddleware(object):
             else:
                 # Anonymous user
                 user_id_string = "none"
-        except Exception as ex:
+        except Exception:
             # Can happen if there is no request.session. This happened in some
             # unittests, /shouldn't/ happen in Real World™, but just in case...
             if not hasattr(request, 'session'):
@@ -77,4 +84,3 @@ class AddUserIDHashMiddleware(object):
         patch_vary_headers(response, ['X-UserIDHash'])
 
         return response
-
