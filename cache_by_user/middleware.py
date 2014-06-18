@@ -43,7 +43,6 @@ class AddUserIDHashMiddleware(object):
 
         # add some salt to prevent guessing the user id
         user_id_string = "AddUserIDHashMiddleware(%s)(%s)" % (settings.SECRET_KEY, user_id_string)
-        print user_id_string
 
         # Little bit of obfucation here, SHA1 hash the id string, so no-one will
         # be able to guess user id's, or know how many users we have
